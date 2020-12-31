@@ -20,7 +20,9 @@ protected:
 	void BeginPlay() override;
 	void Tick(float DeltaSeconds) override;
 private:
-	void CalculateDamage(int Damage);
+	void ApplyDamage(int Damage);
+
+	UFUNCTION() void CharacterTookAction(int32 Damage);
 private:
 	UPROPERTY(EditAnywhere, Category="Initialization") UClass* CharacterToSpawn = nullptr;
 
@@ -28,4 +30,5 @@ private:
 	AActor* Enemy = nullptr;
 
 	bool IsPlayerTurn = true;
+	bool IsCombatOver = false;
 };

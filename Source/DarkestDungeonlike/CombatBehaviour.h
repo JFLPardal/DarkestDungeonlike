@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "CombatBehaviour.generated.h"
 
+DECLARE_EVENT_OneParam(UCombatBehaviour, FCharacterActionTakenSignature, int32);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class DARKESTDUNGEONLIKE_API UCombatBehaviour : public UActorComponent
@@ -24,9 +25,11 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	int TakeAction() const;
+	void TakeAction();
 	bool IsCharacterDead() const;
 	void TakeDamage(int DamageAmount);
+
+	FCharacterActionTakenSignature ActionTaken;
 private:
 	UPROPERTY(EditAnywhere, Category = "Stats") int32 InitialHP = 10;
 	UPROPERTY(EditAnywhere, Category = "Stats") int32 Damage = 10;

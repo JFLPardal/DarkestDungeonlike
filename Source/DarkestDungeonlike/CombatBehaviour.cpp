@@ -33,10 +33,12 @@ void UCombatBehaviour::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-int UCombatBehaviour::TakeAction() const
+void UCombatBehaviour::TakeAction()
 {
 	//UE_LOG(LogTemp, Warning, TEXT("%s: Attacking for %d damage"), *GetFName().ToString(), Damage);
-	return Damage;
+	
+	ActionTaken.Broadcast(Damage);
+	//return Damage;
 }
 
 bool UCombatBehaviour::IsCharacterDead() const
