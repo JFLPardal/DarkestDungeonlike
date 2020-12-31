@@ -31,7 +31,11 @@ public:
 
 	FCharacterActionTakenSignature ActionTaken;
 private:
+	void ChooseAction() const;
+private:
 	UPROPERTY(EditAnywhere, Category = "Stats") int32 InitialHP = 10;
-	UPROPERTY(EditAnywhere, Category = "Stats") int32 Damage = 10;
 	int32 CurrentHP = InitialHP;
+	UPROPERTY(EditAnywhere, Category = "Stats") int32 Damage = 10;
+
+	FTimerHandle TimerHandle;
 };

@@ -3,48 +3,38 @@
 
 #include "CombatBehaviour.h"
 
+
 // Sets default values for this component's properties
 UCombatBehaviour::UCombatBehaviour()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 	CurrentHP = InitialHP;
-	// ...
 }
-
 
 // Called when the game starts
 void UCombatBehaviour::BeginPlay()
 {
 	Super::BeginPlay();
-
-	UE_LOG(LogTemp, Warning, TEXT("current hp on begin play: %d "), CurrentHP);
-	// ...
-	
 }
-
 
 // Called every frame
 void UCombatBehaviour::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
 void UCombatBehaviour::TakeAction()
 {
-	//UE_LOG(LogTemp, Warning, TEXT("%s: Attacking for %d damage"), *GetFName().ToString(), Damage);
-	
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UCombatBehaviour::ChooseAction, 1.f, false);
+}
+
+void UCombatBehaviour::ChooseAction() const
+{
 	ActionTaken.Broadcast(Damage);
-	//return Damage;
 }
 
 bool UCombatBehaviour::IsCharacterDead() const
 {
-
-	UE_LOG(LogTemp, Warning, TEXT("hp before damage: %d "), CurrentHP);
 	return CurrentHP <= 0;
 }
 
