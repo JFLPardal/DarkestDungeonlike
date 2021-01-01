@@ -23,7 +23,7 @@ void AMyGameModeBase::BeginPlay()
 	playerSpawnParams.Name = "Player";
 	Player = GetWorld()->SpawnActor(PlayerCharacter, &playerSpawnLocation, playerSpawnParams);
 	
-	//spawn enemy
+	// spawn enemy
 	FTransform enemySpawnLocation;
 	enemySpawnLocation.SetLocation(FVector(240, 160, 90));
 	FActorSpawnParameters enemySpawnParams;
@@ -43,7 +43,7 @@ void AMyGameModeBase::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	if (IsCombatOver)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("COMBAT OVER"));
+		//UE_LOG(LogTemp, Warning, TEXT("COMBAT OVER"));
 	}
 }
 
@@ -94,4 +94,10 @@ void AMyGameModeBase::CharacterTookAction(int32 Damage)
 			EnemyCombat->TakeAction();
 		}
 	}
+}
+
+void AMyGameModeBase::PlayerAction()
+{
+	Player->FindComponentByClass<UCombatBehaviour>()->TakeAction();
+	TurnWasTaken.Broadcast();
 }

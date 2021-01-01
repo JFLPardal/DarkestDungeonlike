@@ -18,7 +18,7 @@ public:
 	AMyGameModeBase();
 public:
 	FTurnWasTakenSignature TurnWasTaken;
-
+	UFUNCTION(BlueprintCallable) void PlayerAction();
 protected:
 	void BeginPlay() override;
 	void Tick(float DeltaSeconds) override;

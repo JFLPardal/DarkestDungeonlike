@@ -13,11 +13,6 @@ UPlayerCombatBehaviour::UPlayerCombatBehaviour()
 void UPlayerCombatBehaviour::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	if (IsPlayerTurn)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("player chose action"));
-		ChooseAction();
-	}
 }
 
 void UPlayerCombatBehaviour::BeginPlay()
