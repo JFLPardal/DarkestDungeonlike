@@ -4,6 +4,7 @@
 #include "MyGameModeBase.h"
 
 #include "CombatBehaviour.h"
+#include "PlayerCombatBehaviour.h"
 
 AMyGameModeBase::AMyGameModeBase()
 {
@@ -20,21 +21,21 @@ void AMyGameModeBase::BeginPlay()
 	playerSpawnLocation.SetLocation(FVector(240, -160, 90));
 	FActorSpawnParameters playerSpawnParams;
 	playerSpawnParams.Name = "Player";
-	Player = GetWorld()->SpawnActor(CharacterToSpawn, &playerSpawnLocation, playerSpawnParams);
+	Player = GetWorld()->SpawnActor(PlayerCharacter, &playerSpawnLocation, playerSpawnParams);
 	
 	//spawn enemy
 	FTransform enemySpawnLocation;
 	enemySpawnLocation.SetLocation(FVector(240, 160, 90));
 	FActorSpawnParameters enemySpawnParams;
 	enemySpawnParams.Name = "Enemy";
-	Enemy = GetWorld()->SpawnActor(CharacterToSpawn, &enemySpawnLocation, enemySpawnParams);
+	Enemy = GetWorld()->SpawnActor(EnemyCharacter, &enemySpawnLocation, enemySpawnParams);
 
 	// subscribe to enemy and player take action events with a function that calculates Damage and checks if combat should be over
 	Enemy->FindComponentByClass<UCombatBehaviour>()->ActionTaken.AddUObject<AMyGameModeBase>(this, &AMyGameModeBase::CharacterTookAction);
 	Player->FindComponentByClass<UCombatBehaviour>()->ActionTaken.AddUObject<AMyGameModeBase>(this, &AMyGameModeBase::CharacterTookAction);
 	
 	// get the turns started
-	Player->FindComponentByClass<UCombatBehaviour>()->TakeAction();
+	Player->FindComponentByClass<UPlayerCombatBehaviour>()->HasFirstAction(IsPlayerTurn);
 }
 
 void AMyGameModeBase::Tick(float DeltaSeconds)
@@ -75,6 +76,8 @@ void AMyGameModeBase::CharacterTookAction(int32 Damage)
 		IsCombatOver = PlayerCombat->IsCharacterDead();
 	}
 
+	TurnWasTaken.Broadcast();
+
 	if (IsCombatOver)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("COMBAT IS NOW OVER"));
@@ -82,11 +85,11 @@ void AMyGameModeBase::CharacterTookAction(int32 Damage)
 	else
 	{
 		IsPlayerTurn = !IsPlayerTurn;
-		if (IsPlayerTurn)
+		/*if (IsPlayerTurn)
 		{
 			PlayerCombat->TakeAction();
-		}
-		else
+		}*/
+		if (!IsPlayerTurn)
 		{
 			EnemyCombat->TakeAction();
 		}

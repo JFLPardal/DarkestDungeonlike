@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "MyGameModeBase.generated.h"
 
+DECLARE_EVENT(AMyGameModeBase, FTurnWasTakenSignature);
 /**
  * 
  */
@@ -15,16 +16,20 @@ class DARKESTDUNGEONLIKE_API AMyGameModeBase : public AGameModeBase
 	GENERATED_BODY()
 public:
 	AMyGameModeBase();
+public:
+	FTurnWasTakenSignature TurnWasTaken;
 
 protected:
 	void BeginPlay() override;
 	void Tick(float DeltaSeconds) override;
+
 private:
 	void ApplyDamage(int Damage);
 
 	UFUNCTION() void CharacterTookAction(int32 Damage);
 private:
-	UPROPERTY(EditAnywhere, Category="Initialization") UClass* CharacterToSpawn = nullptr;
+	UPROPERTY(EditAnywhere, Category="Initialization") UClass* EnemyCharacter = nullptr;
+	UPROPERTY(EditAnywhere, Category="Initialization") UClass* PlayerCharacter = nullptr;
 
 	AActor* Player = nullptr;
 	AActor* Enemy = nullptr;

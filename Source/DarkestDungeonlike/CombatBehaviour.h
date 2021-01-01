@@ -14,28 +14,25 @@ class DARKESTDUNGEONLIKE_API UCombatBehaviour : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
 	UCombatBehaviour();
-
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	void TakeAction();
+public:	
+	virtual void TakeAction();
 	bool IsCharacterDead() const;
 	void TakeDamage(int DamageAmount);
-
+public:
 	FCharacterActionTakenSignature ActionTaken;
-private:
+
+protected:
+	virtual void BeginPlay() override;
+protected:
 	void ChooseAction() const;
+protected:
+	UPROPERTY(EditAnywhere, Category = "Stats") int32 Damage = 1;
+
 private:
 	UPROPERTY(EditAnywhere, Category = "Stats") int32 InitialHP = 10;
 	int32 CurrentHP = InitialHP;
-	UPROPERTY(EditAnywhere, Category = "Stats") int32 Damage = 10;
 
 	FTimerHandle TimerHandle;
 };

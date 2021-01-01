@@ -40,7 +40,7 @@ bool UCombatBehaviour::IsCharacterDead() const
 
 void UCombatBehaviour::TakeDamage(int DamageAmount)
 {
-	UE_LOG(LogTemp, Warning, TEXT("hp before taking damage: %d "), CurrentHP);
 	CurrentHP -= DamageAmount;
+	UE_LOG(LogTemp, Warning, TEXT("hp after taking damage: %d "), CurrentHP);
 }
 
