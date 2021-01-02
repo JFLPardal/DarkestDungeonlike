@@ -44,3 +44,8 @@ void UCombatBehaviour::TakeDamage(int DamageAmount)
 	UE_LOG(LogTemp, Warning, TEXT("hp after taking damage: %d "), CurrentHP);
 }
 
+const TArray<FSkill>& UCombatBehaviour::GetCharacterSkills() const
+{
+	return Skills;
+}
+

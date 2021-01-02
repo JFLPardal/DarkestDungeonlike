@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Skill.h"
 #include "CombatBehaviour.generated.h"
 
 DECLARE_EVENT_OneParam(UCombatBehaviour, FCharacterActionTakenSignature, int32);
@@ -31,8 +32,12 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Stats") int32 Damage = 1;
 
 private:
+	UFUNCTION(BlueprintCallable) const TArray<FSkill>& GetCharacterSkills() const;
+private:
 	UPROPERTY(EditAnywhere, Category = "Stats") int32 InitialHP = 10;
 	int32 CurrentHP = InitialHP;
+
+	UPROPERTY(EditAnywhere, Category = "Skill") TArray<FSkill> Skills;
 
 	FTimerHandle TimerHandle;
 };

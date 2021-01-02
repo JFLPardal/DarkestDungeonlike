@@ -101,3 +101,8 @@ void AMyGameModeBase::PlayerAction()
 	Player->FindComponentByClass<UCombatBehaviour>()->TakeAction();
 	TurnWasTaken.Broadcast();
 }
+
+UCombatBehaviour* AMyGameModeBase::GetPlayerCharacterCombat()
+{
+	return Player->FindComponentByClass<UCombatBehaviour>();
+}

@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "MyGameModeBase.generated.h"
 
+class UCombatBehaviour;
+
 DECLARE_EVENT(AMyGameModeBase, FTurnWasTakenSignature);
 /**
  * 
@@ -27,6 +29,7 @@ private:
 	void ApplyDamage(int Damage);
 
 	UFUNCTION() void CharacterTookAction(int32 Damage);
+	UFUNCTION(BlueprintCallable) UCombatBehaviour* GetPlayerCharacterCombat();
 private:
 	UPROPERTY(EditAnywhere, Category="Initialization") UClass* EnemyCharacter = nullptr;
 	UPROPERTY(EditAnywhere, Category="Initialization") UClass* PlayerCharacter = nullptr;
