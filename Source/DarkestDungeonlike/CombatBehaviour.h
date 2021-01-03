@@ -31,7 +31,7 @@ protected:
 protected:
 	UPROPERTY(EditAnywhere, Category = "Stats") int32 Damage = 1;
 
-private:
+public:
 	UFUNCTION(BlueprintCallable) const TArray<FSkill>& GetCharacterSkills() const;
 private:
 	UPROPERTY(EditAnywhere, Category = "Stats") int32 InitialHP = 10;
