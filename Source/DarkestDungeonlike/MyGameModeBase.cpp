@@ -5,6 +5,7 @@
 
 #include "CombatBehaviour.h"
 #include "PlayerCombatBehaviour.h"
+#include "AICombatBehaviour.h"
 
 AMyGameModeBase::AMyGameModeBase()
 {
@@ -59,13 +60,13 @@ void AMyGameModeBase::ApplyDamage(int Damage)
 	}
 }
 
-void AMyGameModeBase::CharacterTookAction(int32 Damage)
+void AMyGameModeBase::CharacterTookAction(FSkill ChosenSkill)
 {
-	auto EnemyCombat = Enemy->FindComponentByClass<UCombatBehaviour>();
+	auto EnemyCombat = Enemy->FindComponentByClass<UAICombatBehaviour>();
 	auto PlayerCombat = Player->FindComponentByClass<UCombatBehaviour>();
 	check(EnemyCombat != nullptr && PlayerCombat != nullptr);
 	
-	ApplyDamage(Damage);
+	ApplyDamage(ChosenSkill.Damage);
 
 	if (IsPlayerTurn)
 	{
@@ -85,10 +86,6 @@ void AMyGameModeBase::CharacterTookAction(int32 Damage)
 	else
 	{
 		IsPlayerTurn = !IsPlayerTurn;
-		/*if (IsPlayerTurn)
-		{
-			PlayerCombat->TakeAction();
-		}*/
 		if (!IsPlayerTurn)
 		{
 			EnemyCombat->TakeAction();
@@ -96,9 +93,9 @@ void AMyGameModeBase::CharacterTookAction(int32 Damage)
 	}
 }
 
-void AMyGameModeBase::PlayerAction()
+void AMyGameModeBase::PlayerAction(FString SkillToBeUsed)
 {
-	Player->FindComponentByClass<UCombatBehaviour>()->TakeAction();
+	Player->FindComponentByClass<UPlayerCombatBehaviour>()->SkillToUse(SkillToBeUsed);
 	TurnWasTaken.Broadcast();
 }
 

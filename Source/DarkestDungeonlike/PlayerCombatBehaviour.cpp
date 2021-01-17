@@ -3,6 +3,7 @@
 
 #include "PlayerCombatBehaviour.h"
 #include "Kismet/GameplayStatics.h"
+#include "Skill.h"
 #include "MyGameModeBase.h"
 
 UPlayerCombatBehaviour::UPlayerCombatBehaviour()
@@ -30,8 +31,16 @@ void UPlayerCombatBehaviour::UpdateIsPlayerTurn()
 	IsPlayerTurn = !IsPlayerTurn;
 }
 
-void UPlayerCombatBehaviour::TakeAction()
+void UPlayerCombatBehaviour::SkillToUse(FString NameOfSkillToBeUsed)
 {
-	UE_LOG(LogTemp, Warning, TEXT("is player turn"));
-	ChooseAction();
+	FSkill SkillToUse;
+	for (FSkill& Skill : Skills)
+	{
+		if (Skill.Name.ToString() == NameOfSkillToBeUsed)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("player used: %s"), *NameOfSkillToBeUsed);
+			SkillToUse = Skill;
+		}
+	}
+	ChooseAction(SkillToUse);
 }

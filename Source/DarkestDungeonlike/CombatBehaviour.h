@@ -7,7 +7,7 @@
 #include "Skill.h"
 #include "CombatBehaviour.generated.h"
 
-DECLARE_EVENT_OneParam(UCombatBehaviour, FCharacterActionTakenSignature, int32);
+DECLARE_EVENT_OneParam(UCombatBehaviour, FCharacterActionTakenSignature, FSkill);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class DARKESTDUNGEONLIKE_API UCombatBehaviour : public UActorComponent
@@ -18,7 +18,6 @@ public:
 	UCombatBehaviour();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 public:	
-	virtual void TakeAction();
 	bool IsCharacterDead() const;
 	void TakeDamage(int DamageAmount);
 public:
@@ -27,17 +26,15 @@ public:
 protected:
 	virtual void BeginPlay() override;
 protected:
-	void ChooseAction() const;
+	void ChooseAction(FSkill ChosenSkill) const;
 protected:
 	UPROPERTY(EditAnywhere, Category = "Stats") int32 Damage = 1;
+	UPROPERTY(EditAnywhere, Category = "Skill") TArray<FSkill> Skills;
+	FTimerHandle TimerHandle;
 
 public:
 	UFUNCTION(BlueprintCallable) const TArray<FSkill>& GetCharacterSkills() const;
 private:
 	UPROPERTY(EditAnywhere, Category = "Stats") int32 InitialHP = 10;
 	int32 CurrentHP = InitialHP;
-
-	UPROPERTY(EditAnywhere, Category = "Skill") TArray<FSkill> Skills;
-
-	FTimerHandle TimerHandle;
 };

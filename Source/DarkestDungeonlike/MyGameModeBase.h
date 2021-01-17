@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "Skill.h"
 #include "MyGameModeBase.generated.h"
 
 class UCombatBehaviour;
@@ -20,7 +21,7 @@ public:
 	AMyGameModeBase();
 public:
 	FTurnWasTakenSignature TurnWasTaken;
-	UFUNCTION(BlueprintCallable) void PlayerAction();
+	UFUNCTION(BlueprintCallable) void PlayerAction(FString SkillToBeUsed);
 protected:
 	void BeginPlay() override;
 	void Tick(float DeltaSeconds) override;
@@ -28,7 +29,7 @@ protected:
 private:
 	void ApplyDamage(int Damage);
 
-	UFUNCTION() void CharacterTookAction(int32 Damage);
+	UFUNCTION() void CharacterTookAction(FSkill ChosenSkill);
 	UFUNCTION(BlueprintCallable) UCombatBehaviour* GetPlayerCharacterCombat();
 private:
 	UPROPERTY(EditAnywhere, Category="Initialization") UClass* EnemyCharacter = nullptr;

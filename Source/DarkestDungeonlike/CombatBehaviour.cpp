@@ -23,14 +23,9 @@ void UCombatBehaviour::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UCombatBehaviour::TakeAction()
+void UCombatBehaviour::ChooseAction(FSkill ChosenSkill) const
 {
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UCombatBehaviour::ChooseAction, 1.f, false);
-}
-
-void UCombatBehaviour::ChooseAction() const
-{
-	ActionTaken.Broadcast(Damage);
+	ActionTaken.Broadcast(ChosenSkill);
 }
 
 bool UCombatBehaviour::IsCharacterDead() const

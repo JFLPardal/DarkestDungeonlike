@@ -17,7 +17,7 @@ public:
 	UPlayerCombatBehaviour();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 public:
-	void TakeAction() override;
+	void SkillToUse(FString NameOfSkillToBeUsed);
 	void HasFirstAction(bool HasFirstMove);
 
 protected:
